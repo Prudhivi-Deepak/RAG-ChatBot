@@ -11,7 +11,8 @@ export interface Message {
 export class ChatService {
   private http = inject(HttpClient);
   private platformId = inject(PLATFORM_ID);
-  private apiUrl = 'http://localhost:5000';
+  // private apiUrl = 'http://localhost:5000';
+  private apiUrl = 'https://prudhivi-deepak-my-rag-backend.hf.space';
 
   sessionId = signal<string | null>(null);
   messages = signal<Message[]>([]);
