@@ -1,0 +1,55 @@
+<div class="chat-wrapper">
+    <header>
+        <div class="header-left">
+            <h2>RagChat AI</h2>
+            <p class="header-description">
+                Upload PDF file and ask your questions😉
+            </p>
+        </div>
+
+        <div class="header-right">
+            @if (fileName()) {
+            <span class="file-badge">
+                📄 {{ fileName() }}
+            </span>
+            }
+
+            <div class="upload-btn-wrapper">
+                <button class="btn-upload">📎 {{ fileName() ? 'Change PDF' : 'Upload PDF' }}</button>
+                <input type="file" (change)="onFileSelected($event)" accept=".pdf"
+                    style="position: absolute; left: 0; top: 0; opacity: 0; cursor: pointer; height: 100%; width: 100%;">
+            </div>
+        </div>
+    </header>
+
+    <div class="chat-window">
+        @for (msg of messages(); track $index) {
+        <div class="message-row" [class]="msg.role">
+            <div class="bubble">
+                {{ msg.content }}
+            </div>
+        </div>
+        }
+
+        @if (isLoading()) {
+        <div class="message-row assistant">
+            <div class="bubble">
+                <div class="typing-dots">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+        </div>
+        }
+    </div>
+
+    <div class="input-container">
+        <div class="input-bar">
+            <input [(ngModel)]="queryText" (keyup.enter)="send()" placeholder="Type your question here..."
+                [disabled]="isLoading() || !fileName()">
+
+            <button (click)="send()" [disabled]="isLoading() || !queryText() || !fileName()">
+                ↑
+            </button>
+        </div>
+    </div>
+</div>
